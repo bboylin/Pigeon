@@ -1,0 +1,1 @@
+include ':sample', ':pigeon-core', ':pigeon-placeholder', ':samplelib', ':anothersamplelib'

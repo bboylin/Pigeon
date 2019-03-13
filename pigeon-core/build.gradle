@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    compileOnly project(':pigeon-placeholder')
+}
+
+publish {
+    userOrg = 'bboylin'      //bintray注册的用户名
+    groupId = 'xyz.bboylin'         //compile引用时的第1部分groupId
+    artifactId = 'pigeon-core'     //compile引用时的第2部分项目名
+    repoName = 'maven'
+    publishVersion = '0.1.1'    //compile引用时的第3部分版本号
+    desc = 'A tool for Android'
+    website = 'https://github.com/'
+}
