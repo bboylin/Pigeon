@@ -7,7 +7,7 @@ import xyz.bboylin.pigeon.annotation.Interceptor;
 import xyz.bboylin.pigeon.core.AbstractSchemeInterceptor;
 
 /**
- * Created by denglin03 on 2019/3/10.
+ * Created by bboylin on 2019/3/10.
  */
 @Interceptor(index = 1)
 public class AnotherDemoInterceptor extends AbstractSchemeInterceptor {

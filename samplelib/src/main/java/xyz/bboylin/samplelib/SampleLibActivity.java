@@ -32,10 +32,12 @@ public class SampleLibActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int id = view.getId();
+        String uri = "";
         if (id == R.id.btn_interceptor) {
-            Pigeon.dispatch(SampleLibActivity.this, SCHEME_FOR_LOAD_HTTP);
+            uri = SCHEME_FOR_LOAD_HTTP;
         } else if (id == R.id.btn_dispatcher) {
-            Pigeon.dispatch(SampleLibActivity.this, SCHEME_FOR_LOAD_HTTPS);
+            uri = SCHEME_FOR_LOAD_HTTPS;
         }
+        Pigeon.dispatch(SampleLibActivity.this, uri);
     }
 }

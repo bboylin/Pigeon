@@ -3,6 +3,7 @@ package xyz.bboylin.demo;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -27,18 +28,20 @@ public class DemoApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Pigeon.init(new SchemeConfig() {
+            @Nullable
             @Override
             public List<AbstractSchemeInterceptor> getInterceptors() {
                 return null;
             }
 
+            @Nullable
             @Override
             public Map<String, AbstractSchemeDispatcher> getDispatchers() {
                 return null;
             }
 
             @Override
-            public boolean checkValidScheme(SchemeEntity entity) {
+            public boolean checkValidScheme(@NonNull SchemeEntity entity) {
                 return TextUtils.equals(entity.schemeHead, "pigeon") && entity.version >= CURRENT_VERSION;
             }
         });

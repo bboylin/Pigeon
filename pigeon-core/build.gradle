@@ -34,7 +34,7 @@ publish {
     groupId = 'xyz.bboylin'         //compile引用时的第1部分groupId
     artifactId = 'pigeon-core'     //compile引用时的第2部分项目名
     repoName = 'maven'
-    publishVersion = '0.1.1'    //compile引用时的第3部分版本号
+    publishVersion = '0.1.2'    //compile引用时的第3部分版本号
     desc = 'A tool for Android'
     website = 'https://github.com/'
 }

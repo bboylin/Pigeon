@@ -3,11 +3,13 @@ package xyz.bboylin.demo;
 import android.os.Bundle;
 import android.view.View;
 
+import xyz.bboylin.pigeon.annotation.RouteNode;
 import xyz.bboylin.pigeon.core.Pigeon;
 import xyz.bboylin.pigeon.core.Postcard;
 import xyz.bboylin.pigeon.core.PostcardBuilder;
 import xyz.bboylin.samplelib.BaseActivity;
 
+@RouteNode("pigeon://bboylin.xyz/main")
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override

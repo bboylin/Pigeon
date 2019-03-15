@@ -53,21 +53,22 @@ public class SchemeManager {
     /**
      * 分发scheme
      *
-     * @param context 调用源context
-     * @param scheme  scheme
+     * @param context  调用源context
+     * @param uri      scheme
+     * @param callback dispatch callback
      * @return 是否能正常分发
      */
-    public boolean dispatch(Context context, String scheme) {
+    public boolean dispatch(Context context, String uri, PigeonDispatchCallback callback) {
         if (!hasInitialized) {
             throw new RuntimeException("pigeon has not been initialized yet !");
         }
-        if (mInterceptorChain.shouldInterceptSchemeDispatch(context, scheme)) {
-            PigeonLog.d(TAG, "scheme intercepted:" + scheme);
+        if (mInterceptorChain.shouldInterceptSchemeDispatch(context, uri)) {
+            PigeonLog.d(TAG, "scheme intercepted:" + uri);
             return true;
         }
-        SchemeEntity entity = SchemeEntity.parse(scheme);
+        SchemeEntity entity = SchemeEntity.parse(uri);
         if (entity == null) {
-            PigeonLog.eWithStackTrace(TAG, "error in parsing scheme to entity: " + scheme);
+            PigeonLog.eWithStackTrace(TAG, "error in parsing scheme to entity: " + uri);
             return false;
         }
         if (mSchemeConfig != null && !mSchemeConfig.checkValidScheme(entity)) {
@@ -79,20 +80,22 @@ public class SchemeManager {
             PigeonLog.eWithStackTrace(TAG, "error, cannot find dispatcher for:" + entity.path);
             return false;
         }
-        PigeonLog.endDispatching(scheme);
-        return dispatcher.invoke(context, entity.query);
+        PigeonLog.endDispatching(uri);
+        return dispatcher.invoke(context, entity.query, callback);
     }
 
-    public void init(@NonNull SchemeConfig config) {
+    public void init(@Nullable SchemeConfig config) {
         if (hasInitialized) {
             if (PigeonLog.isDebug()) {
                 throw new RuntimeException("pigeon has already been initialized");
             }
             return;
         }
-        mSchemeConfig = config;
         hasInitialized = true;
-        mInterceptorChain.addInterceptors(config.getInterceptors());
-        addDispatchers(config.getDispatchers());
+        if (config != null) {
+            mSchemeConfig = config;
+            mInterceptorChain.addInterceptors(config.getInterceptors());
+            addDispatchers(config.getDispatchers());
+        }
     }
 }

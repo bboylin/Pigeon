@@ -25,7 +25,9 @@ public class Pigeon {
      */
     public static void setOff(@NonNull Postcard postcard) {
         Intent intent = new Intent(postcard.sourceCtx, postcard.destCls);
-        intent.putExtras(postcard.extraBundle);
+        if (postcard.extraBundle != null) {
+            intent.putExtras(postcard.extraBundle);
+        }
         postcard.sourceCtx.startActivity(intent);
     }
 
@@ -39,7 +41,9 @@ public class Pigeon {
         Preconditions.checkArgument(postcard.sourceCtx instanceof FragmentActivity, "should use an FragmentActivity " +
                 "context for result");
         Intent intent = new Intent(postcard.sourceCtx, postcard.destCls);
-        intent.putExtras(postcard.extraBundle);
+        if (postcard.extraBundle != null) {
+            intent.putExtras(postcard.extraBundle);
+        }
         FragmentActivity sourceAct = (FragmentActivity) postcard.sourceCtx;
         PigeonFragment pigeonFragment = getPigeonFragment(sourceAct.getSupportFragmentManager());
         pigeonFragment.startActivityForResult(intent, onResultListener);
@@ -54,17 +58,19 @@ public class Pigeon {
         InjectorDispatcher.inject(activity);
     }
 
-    public static boolean dispatch(@NonNull Context context, @NonNull String scheme) {
+    public static boolean dispatch(@NonNull Context context, @NonNull String uri) {
+        return dispatch(context, uri, null);
+    }
+
+    public static boolean dispatch(@NonNull Context context, @NonNull String uri, @Nullable PigeonDispatchCallback callback) {
         Preconditions.checkNotNull(context, "dispatch context must not be null");
-        Preconditions.checkNotNull(scheme, "dispatch scheme must not be null");
-        PigeonLog.startDispatching(scheme);
-        return SchemeManager.getInstance().dispatch(context, scheme);
+        Preconditions.checkNotNull(uri, "dispatch uri must not be null");
+        PigeonLog.startDispatching(uri);
+        return SchemeManager.getInstance().dispatch(context, uri, callback);
     }
 
     public static void init(@Nullable SchemeConfig config) {
-        if (config != null) {
-            SchemeManager.getInstance().init(config);
-        }
+        SchemeManager.getInstance().init(config);
     }
 
     public static void openDebug() {

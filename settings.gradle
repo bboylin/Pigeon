@@ -1,1 +1,1 @@
-include ':sample', ':pigeon-core', ':pigeon-placeholder', ':samplelib', ':anothersamplelib'
+include ':sample', ':pigeon-core', ':pigeon-placeholder', ':samplelib', ':anothersamplelib', ':baselib'

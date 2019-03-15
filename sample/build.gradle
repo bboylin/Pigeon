@@ -28,7 +28,9 @@ dependencies {
     implementation 'com.github.bboylin:UniversalToast:v1.0.9'
     implementation 'com.facebook.fresco:fresco:1.10.0'
     implementation 'com.facebook.fresco:animated-gif:1.10.0'
-    api project(':pigeon-core')
+//    api project(':pigeon-core')
+//    compile 'xyz.bboylin:pigeon-core:0.1.1'
+    api project(':baselib')
     implementation project(':anothersamplelib')
     implementation project(':samplelib')
 }

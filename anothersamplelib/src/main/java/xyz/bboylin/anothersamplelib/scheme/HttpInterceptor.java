@@ -14,7 +14,7 @@ import xyz.bboylin.pigeon.core.AbstractSchemeInterceptor;
 import xyz.bboylin.pigeon.core.SchemeEntity;
 
 /**
- * Created by denglin03 on 2019/2/28.
+ * Created by bboylin on 2019/2/28.
  */
 @Interceptor
 public class HttpInterceptor extends AbstractSchemeInterceptor {
@@ -29,13 +29,13 @@ public class HttpInterceptor extends AbstractSchemeInterceptor {
         Log.d(getName(), "shouldInterceptSchemeDispatch");
         SchemeEntity entity;
         if (TextUtils.isEmpty(scheme) || (entity = SchemeEntity.parse(scheme)) == null) {
-            return true;
+            return false;
         }
         if (entity.query != null) {
             String params = entity.query.getParam("params");
             try {
                 String url = new JSONObject(params).optString("url");
-                boolean intercepted = !url.startsWith("https");
+                boolean intercepted = url.startsWith("http://");
                 if (intercepted) {
                     IAppRuntime runtime = AppRuntimeProvider.get();
                     runtime.showUniversalToast(runtime.getAppContext(), "Http禁止通行");

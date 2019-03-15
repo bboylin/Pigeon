@@ -1,6 +1,7 @@
 package xyz.bboylin.pigeon.core;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Created by bboylin on 2019/2/13.
@@ -18,6 +19,7 @@ public class SchemeEntity {
         this.query = query;
     }
 
+    @Nullable
     public static SchemeEntity parse(@NonNull String scheme) {
         int indexEndOfHead = scheme.indexOf("://");
         if (indexEndOfHead < 0) {

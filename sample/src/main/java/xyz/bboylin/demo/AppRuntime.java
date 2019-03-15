@@ -6,7 +6,7 @@ import xyz.bboylin.anothersamplelib.IAppRuntime;
 import xyz.bboylin.universialtoast.UniversalToast;
 
 /**
- * Created by denglin03 on 2019/3/10.
+ * Created by bboylin on 2019/3/10.
  */
 public class AppRuntime implements IAppRuntime {
     @Override

@@ -1,5 +1,6 @@
 package xyz.bboylin.pigeon.core;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.net.URLDecoder;
@@ -33,7 +34,7 @@ public class Query {
         }
     }
 
-    public String getParam(String paramKey) {
+    public String getParam(@NonNull String paramKey) {
         return mParams.get(paramKey);
     }
 }

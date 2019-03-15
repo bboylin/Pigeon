@@ -3,9 +3,9 @@ package xyz.bboylin.pigeon.core;
 import android.content.Intent;
 
 /**
- * Created by denglin03 on 2018/10/20.
+ * Created by bboylin on 2018/10/20.
  *
- * @author denglin03
+ * @author bboylin
  * @since 2018/10/20
  */
 public interface OnResultListener {
