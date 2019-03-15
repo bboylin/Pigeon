@@ -19,7 +19,7 @@
 ```groovy
 buildscript {
     dependencies {
-        classpath 'xyz.bboylin:pigeon:0.1.1'
+        classpath 'xyz.bboylin:pigeon:0.1.2'
     }
 }
 ```
@@ -34,7 +34,7 @@ apply plugin: 'xyz.bboylin.pigeon'
 ##### 1.3 组件化项目在base module的build.gradle添加
 
 ```groovy
-// 把 a b c替换成最新版本号
+// 把 a b c替换成最新的release版本号
 compile 'xyz.bboylin:pigeon-core:a.b.c'
 ```
 非组件化项目则是直接在app module的build.gradle添加
