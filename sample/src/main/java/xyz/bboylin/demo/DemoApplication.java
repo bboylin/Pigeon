@@ -21,7 +21,7 @@ import xyz.bboylin.pigeon.core.SchemeEntity;
  * Created by bboylin on 2019/3/1.
  */
 public class DemoApplication extends Application {
-    private static final int CURRENT_VERSION = 9;
+    private static final int CURRENT_VERSION = 29;
     private static Application sApplication;
 
     @Override
@@ -42,7 +42,7 @@ public class DemoApplication extends Application {
 
             @Override
             public boolean checkValidScheme(@NonNull SchemeEntity entity) {
-                return TextUtils.equals(entity.schemeHead, "pigeon") && entity.version >= CURRENT_VERSION;
+                return TextUtils.equals(entity.schemeHead, "pigeon") && entity.version <= CURRENT_VERSION;
             }
         });
         Pigeon.openDebug();

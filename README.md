@@ -101,7 +101,7 @@ pigeon://v99/broswer/loadUrl?from=MainActivity&showConfirm=1&params={"url":"http
 
 其中version部分遵循正则：v\d+ 数字越大表示版本越高，path部分可自由组合，建议按照module/submodule/...../action这种细分。query部分的key和value在dispatch到对应的dispatcher的时候会进行url decode，同时以hashmap形式提供。
 
-##### 3.2 可通过注解为Pigeon添加Dispatcher和Interceptor , 使用注解好处在方便组件间解耦：
+##### 3.2 可通过注解添加Dispatcher和Interceptor , 在dispatch scheme的时候进行拦截和分发处理：
 
 ```java
 // 每个Dispatcher都有个对应的path，uri dispatch的时候会解析出path，根据path找到对应Dispatcher
@@ -110,13 +110,14 @@ public class WebDispatcher extends AbstractSchemeDispatcher {
 
     @Override
     public boolean invoke(@NonNull Context context, @NonNull Query query, @Nullable PigeonDispatchCallback callback) {
+        // query 中带了scheme的所有参数 ， Context是调用dispatch分发时候传入的
         .......
     }
 }
 
 .......
 
-// 可指定index，因为某些场景下对interceptor顺序有要求
+// 可指定index，因为某些场景下对interceptor列表顺序有要求，大多数情况下只需要@Interceptor，不加index
 @Interceptor(index = 0)
 public class DemoInterceptor extends AbstractSchemeInterceptor {
     @NonNull
@@ -128,6 +129,7 @@ public class DemoInterceptor extends AbstractSchemeInterceptor {
     @Override
     public boolean shouldInterceptSchemeDispatch(@NonNull Context context, @NonNull String scheme) {
         Log.d(getName(), "shouldInterceptSchemeDispatch");
+        // interceptor直接处理整个scheme，参考demo中的HttpInterceptor
         // 当返回false的时候会继续用其他interceptor尝试拦截，返回true不再进行dispatch
         // 所有interceptor都不拦截的情况下会交给对应dispatcher处理
         return false;
@@ -155,7 +157,7 @@ Pigeon.init(new SchemeConfig() {
 
     @Override
     public boolean checkValidScheme(@NonNull SchemeEntity entity) {
-        return TextUtils.equals(entity.schemeHead, "pigeon") && entity.version >= CURRENT_VERSION;
+        return TextUtils.equals(entity.schemeHead, "pigeon") && entity.version <= CURRENT_VERSION;
     }
 });
 // 可以选择是否开启pigeon的debug模式
