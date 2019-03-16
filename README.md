@@ -29,6 +29,12 @@ buildscript {
 ```groovy
 // 注意，此项应该加在Android配置项后面，不然可能报错。
 apply plugin: 'xyz.bboylin.pigeon'
+
+pigeonConfig {
+    // 是否允许增量编译，默认允许，可提升编译速度，如需关闭，改成false
+    // 开启了增量编译的情况下，如果pigeon插件自身遇到异常的话会暂时为下一次编译启用全量，以保证可用性。
+    enableIncremental true
+}
 ```
 
 ##### 1.3 组件化项目在base module的build.gradle添加
