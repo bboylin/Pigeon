@@ -8,7 +8,5 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 public @interface Inject {
-    String target();
-
     boolean singleton() default false;
 }

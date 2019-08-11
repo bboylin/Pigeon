@@ -1,5 +1,7 @@
 package xyz.bboylin.anothersamplelib;
 
+import android.content.Context;
+
 import xyz.bboylin.pigeon.annotation.Autowired;
 import xyz.bboylin.pigeon.annotation.Inject;
 
@@ -8,8 +10,13 @@ import xyz.bboylin.pigeon.annotation.Inject;
  */
 @Autowired
 public class AppRuntimeProvider {
-    @Inject(target = "xyz.bboylin.demo.AppRuntime", singleton = true)
+    @Inject(singleton = true)
     public static IAppRuntime get() {
         return null;
     }
+
+//    @Inject
+//    public static Context noImpl() {
+//        return null;
+//    }
 }

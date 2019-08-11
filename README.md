@@ -19,7 +19,7 @@
 ```groovy
 buildscript {
     dependencies {
-        classpath 'xyz.bboylin:pigeon:0.1.2'
+        classpath 'xyz.bboylin:pigeon:0.1.3'
     }
 }
 ```
@@ -179,22 +179,37 @@ public static boolean dispatch(@NonNull Context context, @NonNull String uri, @N
 
 #### 4. IOC依赖注入
 
-通过Autowired和Inject两个注解，示例：
+通过Autowired和Inject两个注解标记需要注入的类和方法，示例：
 
 ```java
 @Autowired
 public class AppRuntimeProvider {
-    // 注入的目标类以及是否使用单例模式
-    @Inject(target = "xyz.bboylin.demo.AppRuntime", singleton = true)
+    // 是否使用单例模式
+    @Inject(singleton = true)
     public static IAppRuntime get() {
         return null;
     }
 }
 ```
 
-其中xyz.bboylin.demo.AppRuntime是要注入的实现类，其实现了接口IAppRuntime。
+然后通过Provider注解标记要注入的实例，
+```java
+@Provider
+public class AppRuntime implements IAppRuntime {
+    @Override
+    public Context getAppContext() {
+        return DemoApplication.getInstance();
+    }
 
-在最终生成的APK里，这段代码会变成：
+    @Override
+    public void showUniversalToast(Context context, String text) {
+        UniversalToast.makeText(context, text, UniversalToast.LENGTH_SHORT, UniversalToast.EMPHASIZE)
+                .showWarning();
+    }
+}
+```
+
+在最终生成的APK里，AppRuntimeProvider注入后的代码成了：
 
 ```java
 @Autowired
@@ -204,7 +219,6 @@ public class AppRuntimeProvider {
 
     // singleton = true会生成工厂类提供AppRuntime这个类的单例，否则直接new创建实例
     @Inject(
-        target = "xyz.bboylin.demo.AppRuntime",
         singleton = true
     )
     public static IAppRuntime get() {
@@ -212,6 +226,8 @@ public class AppRuntimeProvider {
     }
 }
 ```
+
+其中`AppRuntime_Factory`是pigeon自动生成的提供`AppRuntime`单例的工厂类
 
 #### Principle
 
@@ -225,7 +241,7 @@ public class AppRuntimeProvider {
 
 组件化开发中，有时候会出现下层module需要调用上层module接口的现象，例如获取App Context；例如调用登陆，视频播放等功能，而这几个功能在上层module。
 
-这时候就需要进行控制反转。不使用依赖注入的话，控制反转也能完成，但是需要手动写一些公式化的代码替代依赖注入，而且需要注意注入的时机。
+这时候就需要进行控制反转。通过依赖注入来实现控制反转能减少许多冗余的公式化代码，另外也能减少模块间的耦合。
 
 ##### 5.3 about scheme
 

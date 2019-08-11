@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion versions.compileSdk
     defaultConfig {
         applicationId "xyz.bboylin.demo"
-        minSdkVersion 19
-        targetSdkVersion 28
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
     }
@@ -20,16 +20,16 @@ android {
 apply plugin: 'xyz.bboylin.pigeon'
 
 pigeonConfig {
-    enableIncremental false
+    enableIncremental true
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.github.bboylin:UniversalToast:v1.0.9'
-    implementation 'com.facebook.fresco:fresco:1.10.0'
-    implementation 'com.facebook.fresco:animated-gif:1.10.0'
+    implementation deps.android.appcompat_v7
+    implementation deps.ui.universalToast
+    implementation deps.fresco.core
+    implementation deps.fresco.gif
 //    api project(':pigeon-core')
-//    compile 'xyz.bboylin:pigeon-core:0.1.1'
+    compile deps.pigeon.core
     api project(':baselib')
     implementation project(':anothersamplelib')
     implementation project(':samplelib')
